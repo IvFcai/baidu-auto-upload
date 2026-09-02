@@ -1,0 +1,17 @@
+node_modules/
+dist/
+release/
+release-*/
+release-store/
+.build-temp/
+build-temp-*/
+*.zip
+
+.baidu-profile/
+.chrome-profile*/
+.chrome-smoke-profile/
+.edge-smoke-profile/
+.baidu-debug-*
+artifacts-gui-smoke.png
+
+.env

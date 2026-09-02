@@ -1,0 +1,57 @@
+{
+  "name": "baidu-video-batch-uploader",
+  "version": "1.0.0",
+  "private": true,
+  "description": "百度营销视频批量上传桌面工具",
+  "author": "Baidu Video Uploader",
+  "type": "module",
+  "main": "electron/main.js",
+  "scripts": {
+    "test": "node --test",
+    "start": "electron .",
+    "dev": "electron .",
+    "dist": "electron-builder --win nsis"
+  },
+  "dependencies": {
+    "playwright": "^1.55.0"
+  },
+  "devDependencies": {
+    "electron": "37.10.3",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.baidu.video.batch.uploader",
+    "productName": "百度视频批量上传",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "assets/**/*",
+      "package.json",
+      "!test{,/**/*}",
+      "!bin{,/**/*}",
+      "!*.md",
+      "!.*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true
+    }
+  }
+}

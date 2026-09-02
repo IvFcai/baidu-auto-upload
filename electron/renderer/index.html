@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baidu Video Relay</title>
+  <style>body.config-loading .shell { visibility: hidden; }</style>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="config-loading">
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <div class="brand-mark"><span></span><span></span><span></span></div>
+        <div>
+          <div class="eyebrow">BAIDU / ASSET OPERATIONS</div>
+          <h1>Video Relay</h1>
+        </div>
+      </div>
+      <div class="topbar-meta">
+        <span class="edge-chip" id="edgeChip"><i></i> Google Chrome</span>
+        <span class="build">LOCAL CONTROL / 01</span>
+      </div>
+    </header>
+
+    <section class="status-strip" aria-live="polite">
+      <div class="status-main"><span class="status-dot" id="statusDot"></span><span id="statusLabel">待命</span></div>
+      <div class="status-detail" id="statusDetail">配置好目录后开始</div>
+      <div class="status-count" id="statusCount">—</div>
+    </section>
+
+    <div class="workspace">
+      <section class="panel config-panel">
+        <div class="panel-head">
+          <div><span class="section-kicker">01 / CONFIGURE</span><h2>上传任务</h2></div>
+          <span class="verified"><span>✓</span> 本地安全配置</span>
+        </div>
+
+        <div class="field-group folder-field">
+          <label for="folder">默认视频文件夹</label>
+          <div class="input-with-action">
+            <input id="folder" type="text" placeholder="选择包含视频的文件夹" autocomplete="off" />
+            <button class="icon-button" id="chooseFolder" type="button" title="选择文件夹" aria-label="选择文件夹">⌁</button>
+          </div>
+          <p class="hint" id="folderHint">支持 MP4、MOV、AVI、MKV、WEBM 等格式</p>
+        </div>
+
+        <div class="account-block">
+          <div class="block-title"><span>目标账户列表</span><span class="account-actions"><button class="save-account-button" id="addAccount" type="button">添加账户</button><button class="save-account-button" id="saveAccount" type="button">保存账户列表</button></span></div>
+          <div class="account-list" id="accountList">
+            <div class="account-row" data-account-row>
+              <div class="field-group"><label>账户名称</label><input class="account-name" type="text" value="baidu-nt-恰青春普化21" /></div>
+              <div class="field-group"><label>账户 ID</label><input class="account-id" type="text" value="88193126" /></div>
+              <div class="field-group"><label>视频文件夹</label><div class="input-with-action"><input class="account-folder" type="text" placeholder="该账户的视频目录" autocomplete="off" /><button class="icon-button choose-account-folder" type="button" title="选择该账户的视频文件夹" aria-label="选择该账户的视频文件夹">⌁</button></div></div>
+              <div class="account-row-actions"><button class="account-upload-button" type="button">上传视频</button><button class="remove-account" type="button" title="删除账户" aria-label="删除账户">×</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="params-grid">
+          <div class="field-group"><label for="batchSize">每批数量</label><div class="number-input"><input id="batchSize" type="number" value="12" min="1" step="1" /><span>个 / 批</span></div></div>
+          <div class="field-group"><label for="waitMinutes">单批最长等待</label><div class="number-input"><input id="waitMinutes" type="number" value="15" min="1" step="1" /><span>分钟</span></div></div>
+        </div>
+
+        <div class="options-row">
+          <label class="toggle-label"><input id="recursive" type="checkbox" /><span class="toggle"></span><span>包含子文件夹</span></label>
+          <span class="link-button" id="connectorDetail" title="登录状态会持久保存在当前 Windows 用户的应用数据目录">Chrome 登录配置：持久保存</span>
+        </div>
+
+        <div class="action-row"><button class="stop-button" id="stopButton" type="button" disabled>停止任务</button></div>
+        <p class="action-note"><span class="note-symbol">i</span> 每个账户的“上传视频”按钮会打开独立 Chrome；首次运行需在对应窗口登录一次。</p>
+      </section>
+
+      <section class="panel monitor-panel">
+        <div class="panel-head monitor-head">
+          <div><span class="section-kicker">02 / MONITOR</span><h2>运行监视</h2></div>
+          <span class="live-state" id="liveState">OFFLINE</span>
+        </div>
+        <div class="metrics">
+          <div class="metric"><span class="metric-label">视频总数</span><strong id="metricFiles">—</strong><span class="metric-suffix">FILES</span></div>
+          <div class="metric"><span class="metric-label">上传批次</span><strong id="metricBatches">—</strong><span class="metric-suffix">BATCHES</span></div>
+          <div class="metric accent-metric"><span class="metric-label">批次规格</span><strong id="metricSize">12</strong><span class="metric-suffix">PER RUN</span></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>任务进度</span><strong id="progressText">等待启动</strong></div>
+          <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+        </div>
+        <section class="account-results" aria-live="polite" aria-label="账户上传结果">
+          <div class="result-head"><span>账户结果</span><span id="resultSummary">等待任务</span></div>
+          <div class="result-list" id="resultList"><div class="result-empty">完成后将在这里显示各账户结果</div></div>
+        </section>
+        <div class="log-section">
+          <div class="log-head"><span>活动日志</span><button class="clear-button" id="clearLog" type="button">清空</button></div>
+          <div class="log-list" id="logList" aria-live="polite"><div class="log-empty">任务日志会显示在这里</div></div>
+        </div>
+        <div class="route-note"><span class="route-icon">↳</span><div><strong>自动导航路径</strong><span>账户首页 → 电商推广 → 资产中心 → 视频库</span></div></div>
+      </section>
+    </div>
+    <footer class="footer"><span>BAIDU VIDEO RELAY</span><span>Batch upload console</span><span>v1.0.0</span></footer>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
